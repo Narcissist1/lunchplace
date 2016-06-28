@@ -11,12 +11,13 @@ def create_app():
     app.secret_key = SECRET_KEY
     app.config.update({
         'SQLALCHEMY_DATABASE_URI': SQLALCHEMY_DATABASE_URI,
-        'SQLALCHEMY_ECHO': SQLALCHEMY_ECHO
+        'SQLALCHEMY_ECHO': SQLALCHEMY_ECHO,
+        'SQLALCHEMY_TRACK_MODIFICATIONS': True
     })
     from model import db
     from . import views
     db.init_app(app)
-    views.init_app(app)
+    # views.init_app(app)
     admin.init_app(app)
     return app
 
