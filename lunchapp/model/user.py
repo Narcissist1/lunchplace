@@ -2,6 +2,7 @@
 from . import db
 from sqlalchemy import Table
 
+__all__ = ['User']
 
 user_restaurant_table = Table(
     'user_restaurant_table', db.Model.metadata,
