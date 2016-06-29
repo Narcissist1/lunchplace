@@ -2,23 +2,23 @@
 from . import db
 from sqlalchemy import Table
 from uuid import uuid4
-from sqlalchemy.dialects.postgresql import UUID
+from . import GUID
 
 __all__ = ['User']
 
 user_restaurant_table = Table(
     'user_restaurant_table', db.Model.metadata,
-    db.Column('restaurant_id', UUID,
+    db.Column('restaurant_id', GUID,
               db.ForeignKey('restaurant.id', ondelete='CASCADE'),
               primary_key=True),
-    db.Column('user_id', UUID, db.ForeignKey('lunch_user.id', ondelete='CASCADE'),
+    db.Column('user_id', GUID, db.ForeignKey('lunch_user.id', ondelete='CASCADE'),
               primary_key=True)
 )
 
 
 class User(db.Model):
     __tablename__ = "lunch_user"
-    id = db.Column(UUID, primary_key=True, default=uuid4)
+    id = db.Column(GUID, primary_key=True, default=uuid4)
     name = db.Column(db.Unicode(30), nullable=False)        # 姓名
     tel_num = db.Column(db.String(30), nullable=False)      # 电话
     content = db.Column(db.Unicode(100), nullable=True)     # 简介

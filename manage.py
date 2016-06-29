@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from lunchapp.app import create_app
 from flask.ext.script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from lunchapp.model import db
+from lunchapp import App as app
 
-app = create_app()
 manager = Manager(app)
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)

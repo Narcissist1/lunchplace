@@ -5,6 +5,7 @@ from flask.ext.admin.contrib.sqla import ModelView
 from .model import db
 from .model.user import *
 from .model.restaurant import *
+from . import bcrypt
 
 
 class RestaurantAdmin(ModelView):
@@ -18,6 +19,9 @@ class RestaurantAdmin(ModelView):
 
 class UserAdmin(ModelView):
     column_exclude_list = ['password', ]
+
+    def on_model_change(self, form, user, is_created=False):
+        user.password = bcrypt.generate_password_hash(form.password.data)
 
 
 admin = Admin()
