@@ -17,7 +17,7 @@ def create_app():
     from model import db
     from . import views
     db.init_app(app)
-    # views.init_app(app)
+    views.init_app(app)
     admin.init_app(app)
     return app
 
