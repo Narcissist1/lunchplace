@@ -15,11 +15,11 @@ class Restaurant(db.Model):
     ]
     __tablename__ = "restaurant"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Unicode(30), nullable=False)
-    content = db.Column(db.Unicode(200), nullable=True)
-    address = db.Column(db.Unicode(100), nullable=True)
-    spicy_level = db.Column(ChoiceType(TYPES), nullable=True)
-    cuisine = db.Column(db.Unicode(50), nullable=True)
+    name = db.Column(db.Unicode(30), nullable=False)            # 餐厅名字
+    content = db.Column(db.Unicode(200), nullable=True)         # 简介
+    address = db.Column(db.Unicode(100), nullable=True)         # 地址
+    spicy_level = db.Column(ChoiceType(TYPES), nullable=True)   # 辣
+    cuisine = db.Column(db.Unicode(50), nullable=True)          # 菜系
 
     def __unicode__(self):
         return u'<{model_name}>: {name}>'.format(name=self.name, model_name=self.__class__.__name__)

@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
+import login
 
 
 def init_app(app):
-    app.register_blueprint(code.bp, url_prefix="/api/openid")
-    app.register_blueprint(notify.bp, url_prefix="/api/notify")
+    app.register_blueprint(login.bp, url_prefix="/login/")

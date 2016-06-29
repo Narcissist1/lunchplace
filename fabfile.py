@@ -4,7 +4,7 @@ from fabric.api import *
 from fabric.decorators import hosts
 
 env.user = 'bxzz'
-env.code_base = ''
+env.code_base = 'git@github.com:Narcissist1/lunchplace.git'
 env.dir_name = 'lunchplace'
 
 TEST_CONN = 'dongsheng@yun.zhiyoujy.com'
@@ -18,4 +18,4 @@ def deploy():
     with cd(proj_dir):
         run('git pull --ff')
         with prefix(env_prefix):
-            run('supervisorctl  -c '+os.path.join(HOME_DIR, '.supervisord.ini'+' restart bx-wechatapi:*'))
+            run('supervisorctl  -c '+os.path.join(HOME_DIR, '.supervisord.ini'+' restart lunchplace'))
