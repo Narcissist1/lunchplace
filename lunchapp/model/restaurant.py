@@ -2,6 +2,8 @@
 from . import db
 from datetime import datetime
 from sqlalchemy_utils import ChoiceType
+from uuid import uuid4
+from sqlalchemy.dialects.postgresql import UUID
 
 __all__ = ['Restaurant', 'PersonalRestaurantInfor']
 
@@ -14,7 +16,7 @@ class Restaurant(db.Model):
         (u'4', u'变态啦'),
     ]
     __tablename__ = "restaurant"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(UUID, primary_key=True, default=uuid4)
     name = db.Column(db.Unicode(30), nullable=False)            # 餐厅名字
     content = db.Column(db.Unicode(200), nullable=True)         # 简介
     address = db.Column(db.Unicode(100), nullable=True)         # 地址
@@ -27,12 +29,12 @@ class Restaurant(db.Model):
 
 class PersonalRestaurantInfor(db.Model):
     __tablename__ = 'personal_restaurant_infor'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(UUID, primary_key=True, default=uuid4)
     score = db.Column(db.Float, nullable=False, default=0)
     visit_times = db.Column(db.Integer, default=0)
     last_visit = db.Column(db.DateTime, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), primary_key=True)
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id', ondelete='CASCADE'), primary_key=True)
+    user_id = db.Column(UUID, db.ForeignKey('lunch_user.id', ondelete='CASCADE'), primary_key=True)
+    restaurant_id = db.Column(UUID, db.ForeignKey('restaurant.id', ondelete='CASCADE'), primary_key=True)
     user = db.relationship('User', foreign_keys='PersonalRestaurantInfor.user_id')
     restaurant = db.relationship('Restaurant', foreign_keys='PersonalRestaurantInfor.restaurant_id')
 

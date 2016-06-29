@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-import login
+import base
 
 
 def init_app(app):
-    app.register_blueprint(login.bp, url_prefix="/api/login")
+    app.register_blueprint(base.bp, url_prefix="/api")
