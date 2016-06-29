@@ -8,7 +8,7 @@ bp = Blueprint('login', __name__)
 
 
 class Login(MethodView):
-    def post(self, phone):
+    def get(self, phone):
         user = User.query.filter_by(tel_num=phone).first()
         if not user:
             return make_response('No such user!', 404)
