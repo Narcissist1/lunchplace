@@ -13,7 +13,7 @@ class Restaurant(db.Model):
         (u'0', u'稍微辣'),
         (u'1', u'一般辣'),
         (u'2', u'很辣'),
-        (u'3', u'变态啦'),
+        (u'3', u'变态辣'),
     ]
     __tablename__ = "restaurant"
     id = db.Column(GUID, primary_key=True, default=uuid4)
