@@ -84,6 +84,9 @@ class PostNewRestaurant(MethodView):
             args.update({key: value})
         if request.form.get('name', None) is None:
             return make_response('restaurant name is required!', 400)
+        spicy = request.form.get('spicy_level', None)
+        if spicy is not None and spicy not in (u'1', u'2', u'3', u'4'):
+            return make_response('spicy_level should be in (1, 2, 3, 4)', 400)
         restaurant = Restaurant(**args)
         user.restaurants.append(restaurant)
         db_add(user, commit=True)
