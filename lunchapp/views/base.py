@@ -65,7 +65,8 @@ bp.add_url_rule("/signup", view_func=SignUp.as_view("signup"))
 class PersonalRestaurantList(MethodView):
     @login_required
     def get(self):
-        restaurants = current_user.restaurants
+        user = g.user
+        restaurants = user.restaurants
         data = json_data.restaurant_dict(restaurants)
         return jsonify(result=data)
 
@@ -75,6 +76,7 @@ bp.add_url_rule("/myrestaurants", view_func=PersonalRestaurantList.as_view("myre
 class PostNewRestaurant(MethodView):
     @login_required
     def post(self):
+        user = g.user
         keys = ('name', 'content', 'address', 'spicy_level', 'cuisine')
         args = {}
         for key in keys:
@@ -83,8 +85,9 @@ class PostNewRestaurant(MethodView):
         if request.form.get('name', None) is None:
             return make_response('restaurant name is required!', 400)
         restaurant = Restaurant(**args)
+        user.restaurants.append(restaurant)
+        db_add(user, commit=True)
         db_add(restaurant, commit=True)
-        restaurant = json_data.restaurant_dict(restaurant)
-        return jsonify(result=restaurant)
+        return make_response("Add success!")
 
 bp.add_url_rule("/newrestaurant", view_func=PostNewRestaurant.as_view("newrestaurant"))
