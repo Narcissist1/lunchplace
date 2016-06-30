@@ -82,10 +82,14 @@ class PostNewRestaurant(MethodView):
         for key in keys:
             value = request.form.get(key, None)
             args.update({key: value})
-        if request.form.get('name', None) is None:
+        name = request.form.get('name', None)
+        if name is None:
             return make_response('restaurant name is required!', 400)
+        res = Restaurant.query.filter_by(name=name).first()
+        if res:
+            return make_response('restaurant already exits', 400)
         spicy = request.form.get('spicy_level', None)
-        if spicy is not None and spicy not in (u'1', u'2', u'3', u'4'):
+        if spicy is not None and spicy not in (u'0', u'1', u'2', u'3'):
             return make_response('spicy_level should be in (1, 2, 3, 4)', 400)
         restaurant = Restaurant(**args)
         user.restaurants.append(restaurant)
