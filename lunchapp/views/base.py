@@ -73,6 +73,7 @@ bp.add_url_rule("/myrestaurants", view_func=PersonalRestaurantList.as_view("myre
 
 
 class PostNewRestaurant(MethodView):
+    @login_required
     def post(self):
         keys = ('name', 'content', 'address', 'spicy_level', 'cuisine')
         args = {}
