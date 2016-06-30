@@ -5,6 +5,7 @@ def user_dict(user):
     if not user:
         return None
     info = {
+        'id': user.id,
         'name': user.name,
         'phone': user.tel_num,
         'content': user.content
