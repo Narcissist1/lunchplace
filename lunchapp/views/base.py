@@ -88,6 +88,6 @@ class PostNewRestaurant(MethodView):
         user.restaurants.append(restaurant)
         db_add(user, commit=True)
         db_add(restaurant, commit=True)
-        return make_response("Add success!")
+        return jsonify(result='Add Success!')
 
 bp.add_url_rule("/newrestaurant", view_func=PostNewRestaurant.as_view("newrestaurant"))
