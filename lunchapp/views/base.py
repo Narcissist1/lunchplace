@@ -1,11 +1,17 @@
 # -*- coding:utf-8 -*-
 from flask import Blueprint, request, jsonify, g, make_response
 from flask.views import MethodView
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required, current_user
 from ..model.user import User
+from ..model.restaurant import Restaurant
 from ..model import db_add
 from .. import json_data
 from .. import bcrypt
+
+try:
+    import simplejson as json
+except:
+    import json
 
 bp = Blueprint('base', __name__)
 
@@ -57,7 +63,27 @@ bp.add_url_rule("/signup", view_func=SignUp.as_view("signup"))
 
 
 class PersonalRestaurantList(MethodView):
-    def get(self, phone):
-        user = User.query.filter_by(tel_num=phone).first()
-        if not user:
-            return make_response('No such user!', 404)
+    @login_required
+    def get(self):
+        restaurants = current_user.restaurants
+        data = json_data.restaurant_dict(restaurants)
+        return jsonify(result=data)
+
+bp.add_url_rule("/myrestaurants", view_func=PersonalRestaurantList.as_view("myrestaurants"))
+
+
+class PostNewRestaurant(MethodView):
+    def post(self):
+        keys = ('name', 'content', 'address', 'spicy_level', 'cuisine')
+        args = {}
+        for key in keys:
+            value = request.form.get(key, None)
+            args.update({key: value})
+        if request.form.get('name', None) is None:
+            return make_response('restaurant name is required!', 400)
+        restaurant = Restaurant(**args)
+        db_add(restaurant, commit=True)
+        restaurant = json_data.restaurant_dict(restaurant)
+        return jsonify(result=restaurant)
+
+bp.add_url_rule("/newrestaurant", view_func=PostNewRestaurant.as_view("newrestaurant"))

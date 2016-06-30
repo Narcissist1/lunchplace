@@ -25,7 +25,6 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)    # 密码
     restaurants = db.relationship('Restaurant', secondary=user_restaurant_table, backref='users')
 
-
     def is_active(self):
         """True, as all users are active."""
         return True

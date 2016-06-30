@@ -9,7 +9,6 @@ import uuid
 db = SQLAlchemy()
 
 
-
 class GUID(TypeDecorator):
     """Platform-independent GUID type.
 
@@ -42,6 +41,7 @@ class GUID(TypeDecorator):
             return value
         else:
             return uuid.UUID(value)
+
 
 def handle_exception(f):
     @wraps(f)
