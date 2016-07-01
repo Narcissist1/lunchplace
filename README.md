@@ -53,13 +53,3 @@ url: /newrestaurant
 arguments: token and form data
 
 return: 餐厅JSON数据
-
-## 获取七牛token
-
-method: GET
-
-url: /getqiniutoken
-
-arguments: token
-
-return: 七牛token

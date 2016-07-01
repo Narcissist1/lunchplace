@@ -2,8 +2,8 @@
 from flask import Blueprint, request, jsonify, g, make_response
 from flask.views import MethodView
 from flask_login import login_user, logout_user, login_required
-from ..model.user import User
-from ..model.restaurant import Restaurant
+from ..model.user import *
+from ..model.restaurant import *
 from ..model import db_add
 from .. import json_data
 from flask.ext.bcrypt import Bcrypt
@@ -93,8 +93,16 @@ class PostNewRestaurant(MethodView):
             return make_response('restaurant already exits', 400)
         spicy = request.form.get('spicy_level', None)
         if spicy is not None and spicy not in (u'0', u'1', u'2', u'3'):
-            return make_response('spicy_level should be in (1, 2, 3, 4)', 400)
+            return make_response('spicy_level should be in (0, 1, 2, 3)', 400)
         restaurant = Restaurant(**args)
+        images = request.form.getlist('images[]', None)
+        dbimage = []
+        if images is not None:
+            for imageurl in images:
+                temp = Image(image_url=imageurl)
+                restaurant.images.append(temp)
+                dbimage.append(temp)
+            db_add(dbimage, commit=True)
         user.restaurants.append(restaurant)
         db_add(user, commit=True)
         db_add(restaurant, commit=True)
@@ -102,10 +110,3 @@ class PostNewRestaurant(MethodView):
 
 bp.add_url_rule("/newrestaurant", view_func=PostNewRestaurant.as_view("newrestaurant"))
 
-#
-# class GetQiniuToken(MethodView):
-#     @login_required
-#     def get(self):
-#         return jsonify(uptoken=get_qiniu_token())
-#
-# bp.add_url_rule("/getqiniutoken", view_func=GetQiniuToken.as_view("getqiniutoken"))
