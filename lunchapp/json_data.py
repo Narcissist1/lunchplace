@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from .views.utils import get_qiniu_token
-
+from .views.utils import QINIU_URL
 
 def user_dict(user):
     if not user:
@@ -21,7 +21,8 @@ def _restaurant_dict(res):
         'content': res.content,
         'address': res.address,
         'spicy_level': res.spicy_level.value if res.spicy_level is not None else '',
-        'cuisine': res.cuisine
+        'cuisine': res.cuisine,
+        'images': [QINIU_URL + image for image in res.images]
     }
     return info
 
