@@ -7,7 +7,7 @@ from ..model.restaurant import Restaurant
 from ..model import db_add
 from .. import json_data
 from .. import bcrypt
-from .utils import get_qiniu_token
+# from .utils import get_qiniu_token
 
 try:
     import simplejson as json
