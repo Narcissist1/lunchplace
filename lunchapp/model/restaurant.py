@@ -6,7 +6,7 @@ from sqlalchemy_utils import ChoiceType
 from uuid import uuid4
 from . import GUID
 
-__all__ = ['Restaurant', 'PersonalRestaurantInfor']
+__all__ = ['Restaurant', 'PersonalRestaurantInfor', 'Image']
 
 
 restaurant_image_table = Table(

@@ -26,7 +26,7 @@ class UserAdmin(ModelView):
 
 
 admin = Admin()
-models = [(PersonalRestaurantInfor, u'个人餐厅信息')]
+models = [(PersonalRestaurantInfor, u'个人餐厅信息'), (Image, u'餐厅图片')]
 
 for m in models:
     _model = ModelView(m[0], db.session, endpoint=m[0].__name__, name=m[1])
