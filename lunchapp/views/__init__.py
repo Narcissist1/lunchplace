@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import g
-from  flask_login import current_user
+from flask_login import current_user
 from base import bp as basebp
 from .utils import set_cross
 from ..model.user import User

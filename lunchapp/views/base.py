@@ -6,6 +6,9 @@ from ..model.user import User
 from ..model.restaurant import Restaurant
 from ..model import db_add
 from .. import json_data
+from flask.ext.bcrypt import Bcrypt
+
+bcrypt = Bcrypt()
 
 
 try:

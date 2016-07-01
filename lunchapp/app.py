@@ -37,10 +37,10 @@ def create_app():
         'SQLALCHEMY_TRACK_MODIFICATIONS': True
     })
     from model import db
-    from . import views
+    from .views import init_app as viewinit
     from .admin import admin
     db.init_app(app)
-    views.init_app(app)
+    viewinit(app)
     admin.init_app(app)
     login_manager.init_app(app)
     return app
