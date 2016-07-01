@@ -1,13 +1,12 @@
 # -*- coding:utf-8 -*-
 from flask import Blueprint, request, jsonify, g, make_response
 from flask.views import MethodView
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user, login_required
 from ..model.user import User
 from ..model.restaurant import Restaurant
 from ..model import db_add
 from .. import json_data
-from .. import bcrypt
-# from .utils import get_qiniu_token
+
 
 try:
     import simplejson as json

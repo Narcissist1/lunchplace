@@ -5,8 +5,9 @@ from flask.ext.admin.contrib.sqla import ModelView
 from .model import db
 from .model.user import *
 from .model.restaurant import *
-from . import bcrypt
+from flask.ext.bcrypt import Bcrypt
 
+bcrypt = Bcrypt()
 
 class RestaurantAdmin(ModelView):
     column_choice = {
