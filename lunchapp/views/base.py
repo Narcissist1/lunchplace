@@ -100,10 +100,10 @@ class PostNewRestaurant(MethodView):
 
 bp.add_url_rule("/newrestaurant", view_func=PostNewRestaurant.as_view("newrestaurant"))
 
-
-class GetQiniuToken(MethodView):
-    @login_required
-    def get(self):
-        return jsonify(uptoken=get_qiniu_token())
-
-bp.add_url_rule("/getqiniutoken", view_func=GetQiniuToken.as_view("getqiniutoken"))
+#
+# class GetQiniuToken(MethodView):
+#     @login_required
+#     def get(self):
+#         return jsonify(uptoken=get_qiniu_token())
+#
+# bp.add_url_rule("/getqiniutoken", view_func=GetQiniuToken.as_view("getqiniutoken"))
