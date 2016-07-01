@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from .views.utils import get_qiniu_token
+from .utils import get_qiniu_token
 
 def user_dict(user):
     if not user:
