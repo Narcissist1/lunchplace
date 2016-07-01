@@ -1,11 +1,29 @@
 # coding: utf-8
 from . import db
+from sqlalchemy import Table
 from datetime import datetime
 from sqlalchemy_utils import ChoiceType
 from uuid import uuid4
 from . import GUID
 
 __all__ = ['Restaurant', 'PersonalRestaurantInfor']
+
+
+restaurant_image_table = Table(
+    'restaurant_image_table', db.Model.metadata,
+    db.Column('restaurant_id', GUID,
+              db.ForeignKey('restaurant.id', ondelete='CASCADE'),
+              primary_key=True),
+    db.Column('image_id', GUID, db.ForeignKey('images.id', ondelete='CASCADE'),
+              primary_key=True)
+)
+
+
+class Image(db.Model):
+    __tablename__ = 'images'
+    id = db.Column(GUID, primary_key=True, default=uuid4)
+    image_url = db.Column(db.Unicode(30), nullable=False)
+    create_time = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 class Restaurant(db.Model):
@@ -22,6 +40,7 @@ class Restaurant(db.Model):
     address = db.Column(db.Unicode(100), nullable=True)         # 地址
     spicy_level = db.Column(ChoiceType(TYPES), nullable=True)   # 辣
     cuisine = db.Column(db.Unicode(50), nullable=True)          # 菜系
+    images = db.relationship('Image', secondary=restaurant_image_table, backref='restaurant')
 
     def __unicode__(self):
         return u'<{model_name}>: {name}>'.format(name=self.name, model_name=self.__class__.__name__)
