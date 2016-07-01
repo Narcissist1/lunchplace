@@ -1,6 +1,9 @@
 # -*- coding:utf-8 -*-
-from ..config import QINIU_ACCESS_KEY, QINIU_SECRET_KEY, QINIU_BUCKET
 from qiniu import Auth
+QINIU_BUCKET = 'lunchmemo'
+QINIU_URL = 'http://o9knsavjl.bkt.clouddn.com/'
+QINIU_ACCESS_KEY = 'MN-1dw7DuhiCl7MJPxBLqWgki6JyGvDVQJCE4BTg'
+QINIU_SECRET_KEY = 'u6g_DtfTcj64fo6sG97ODJKYaxDtoMf7CpXccKEI'
 
 qiniu_auth = Auth(QINIU_ACCESS_KEY, QINIU_SECRET_KEY)
 
