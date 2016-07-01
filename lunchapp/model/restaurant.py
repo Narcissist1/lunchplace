@@ -22,7 +22,7 @@ restaurant_image_table = Table(
 class Image(db.Model):
     __tablename__ = 'images'
     id = db.Column(GUID, primary_key=True, default=uuid4)
-    image_url = db.Column(db.Unicode(30), nullable=False)
+    image_url = db.Column(db.Unicode(200), nullable=False)
     create_time = db.Column(db.DateTime, default=datetime.utcnow)
 
 
