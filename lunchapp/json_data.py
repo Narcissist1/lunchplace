@@ -22,7 +22,7 @@ def _restaurant_dict(res):
         'address': res.address,
         'spicy_level': res.spicy_level.value if res.spicy_level is not None else '',
         'cuisine': res.cuisine,
-        'images': [QINIU_URL + image_name for image_name in res.images.image_url]
+        'images': [QINIU_URL + image.image_url for image in res.images]
     }
     return info
 
