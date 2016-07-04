@@ -116,6 +116,8 @@ class UpdateRestaurant(MethodView):
     def post(self):
         user = g.user
         rid = request.form.get('rid', None)
+        if rid is None:
+            return make_response('rid is required', 400)
         restaurant = Restaurant.query.get(rid)
         if restaurant is None:
             return make_response("Restaurant not exist", 404)
