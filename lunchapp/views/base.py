@@ -130,7 +130,6 @@ class UpdateRestaurant(MethodView):
             if value is not None:
                 args.update({key: value})
         restaurant.update(**args)
-        db_add(restaurant, commit=True)
         images = request.form.getlist('images[]', None)
         dbimage = []
         if images is not None:
