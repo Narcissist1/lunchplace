@@ -53,3 +53,13 @@ url: /newrestaurant
 arguments: token and form data
 
 return: 餐厅JSON数据
+
+## 更新餐厅信息
+
+method: POST
+
+url: /updaterestaurant
+
+arguments: 和新建餐厅一样，form data 里面要包含需要更新的餐厅ID ‘rid’
+
+return: 是否成功string

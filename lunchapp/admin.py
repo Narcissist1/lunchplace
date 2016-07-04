@@ -9,6 +9,7 @@ from flask.ext.bcrypt import Bcrypt
 
 bcrypt = Bcrypt()
 
+
 class RestaurantAdmin(ModelView):
     column_choice = {
         'spicy_level': Restaurant.TYPES

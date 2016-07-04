@@ -42,6 +42,11 @@ class Restaurant(db.Model):
     cuisine = db.Column(db.Unicode(50), nullable=True)          # 菜系
     images = db.relationship('Image', secondary=restaurant_image_table, backref='restaurant')
 
+    def update(self, **kwargs):
+        print kwargs
+        for key in kwargs:
+            setattr(self, key, kwargs[key])
+
     def __unicode__(self):
         return u'<{model_name}>: {name}>'.format(name=self.name, model_name=self.__class__.__name__)
 

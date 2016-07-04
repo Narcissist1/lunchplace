@@ -110,3 +110,40 @@ class PostNewRestaurant(MethodView):
 
 bp.add_url_rule("/newrestaurant", view_func=PostNewRestaurant.as_view("newrestaurant"))
 
+
+class UpdateRestaurant(MethodView):
+    @login_required
+    def post(self):
+        user = g.user
+        rid = request.form.get('rid', None)
+        restaurant = Restaurant.query.get(rid)
+        if restaurant is None:
+            return make_response("Restaurant not exist", 404)
+        if restaurant not in user.restaurants:
+            return make_response("Permission deny", 403)
+        keys = ('name', 'content', 'address', 'spicy_level', 'cuisine')
+        args = {}
+        for key in keys:
+            value = request.form.get(key, None)
+            if value is not None:
+                args.update({key: value})
+        restaurant.update(**args)
+        db_add(restaurant, commit=True)
+        images = request.form.getlist('images[]', None)
+        dbimage = []
+        if images is not None:
+            for imageurl in images:
+                temp = Image(image_url=imageurl)
+                restaurant.images.append(temp)
+                dbimage.append(temp)
+            db_add(dbimage, commit=True)
+        db_add(restaurant, commit=True)
+        return jsonify(result='Update Success!')
+
+bp.add_url_rule("/updaterestaurant", view_func=UpdateRestaurant.as_view("updaterestaurant"))
+
+
+class RestaurantPlaza(MethodView):
+    @login_required
+    def get(self):
+        pass
