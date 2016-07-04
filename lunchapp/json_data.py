@@ -2,6 +2,7 @@
 from .views.utils import get_qiniu_token
 from .views.utils import QINIU_URL
 
+
 def user_dict(user):
     if not user:
         return None
@@ -17,6 +18,7 @@ def user_dict(user):
 
 def _restaurant_dict(res):
     info = {
+        'id': res.id,
         'name': res.name,
         'content': res.content,
         'address': res.address,
