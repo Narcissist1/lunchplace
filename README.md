@@ -63,3 +63,14 @@ url: /updaterestaurant
 arguments: 和新建餐厅一样，form data 里面要包含需要更新的餐厅ID ‘rid’
 
 return: 是否成功string
+
+
+## 餐厅广场
+
+method: GET
+
+url: /restaurantplaza
+
+arguments: token
+
+return: 餐厅JSON列表

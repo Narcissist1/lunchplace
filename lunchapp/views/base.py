@@ -147,4 +147,11 @@ bp.add_url_rule("/updaterestaurant", view_func=UpdateRestaurant.as_view("updater
 class RestaurantPlaza(MethodView):
     @login_required
     def get(self):
-        pass
+        user = g.user
+        resall = set(Restaurant.query.all())
+        recommend = resall - set(user.restaurants)
+        recommend = list(recommend)
+        recommend = json_data.restaurant_dict(recommend)
+        return jsonify(result=recommend)
+
+bp.add_url_rule("/restaurantplaza", view_func=RestaurantPlaza.as_view("restaurantplaza"))
