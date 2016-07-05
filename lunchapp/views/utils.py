@@ -9,7 +9,7 @@ qiniu_auth = Auth(QINIU_ACCESS_KEY, QINIU_SECRET_KEY)
 
 
 def get_qiniu_token():
-    return qiniu_auth.upload_token(QINIU_BUCKET, expires=30)
+    return qiniu_auth.upload_token(QINIU_BUCKET, expires=3600*5)
 
 
 def set_cross(resp):

@@ -4,7 +4,6 @@ from fabric.api import *
 from fabric.decorators import hosts
 
 env.user = 'bxzz'
-env.code_base = 'git@github.com:Narcissist1/lunchplace.git'
 env.dir_name = 'lunchplace'
 
 TEST_CONN = 'dongsheng@yun.zhiyoujy.com'
