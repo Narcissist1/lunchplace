@@ -74,3 +74,13 @@ url: /restaurantplaza
 arguments: token
 
 return: 餐厅JSON列表
+
+## 获取七牛上传token（24hours 更新一次）
+
+method : GET
+
+url: /getqiniutoken
+
+arguments: token
+
+return: qiniu token

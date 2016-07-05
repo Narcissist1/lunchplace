@@ -155,3 +155,12 @@ class RestaurantPlaza(MethodView):
         return jsonify(result=recommend)
 
 bp.add_url_rule("/restaurantplaza", view_func=RestaurantPlaza.as_view("restaurantplaza"))
+
+
+class QiniuToken(MethodView):
+    @login_required
+    def get(self):
+        from .utils import get_qiniu_token
+        return jsonify(qiniu_token=get_qiniu_token())
+
+bp.add_url_rule("/getqiniutoken", view_func=QiniuToken.as_view("getqiniutoken"))
