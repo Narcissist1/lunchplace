@@ -151,6 +151,7 @@ class RestaurantPlaza(MethodView):
         resall = set(Restaurant.query.all())
         recommend = resall - set(user.restaurants)
         recommend = list(recommend)
+        recommend = sorted(recommend, key=lambda x: x.create_time, reverse=True)
         recommend = json_data.restaurant_dict(recommend)
         return jsonify(result=recommend)
 
