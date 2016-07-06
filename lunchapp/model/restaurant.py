@@ -40,6 +40,7 @@ class Restaurant(db.Model):
     address = db.Column(db.Unicode(100), nullable=True)         # 地址
     spicy_level = db.Column(ChoiceType(TYPES), nullable=True)   # 辣
     cuisine = db.Column(db.Unicode(50), nullable=True)          # 菜系
+    create_time = db.Column(db.DateTime, default=datetime.utcnow)
     images = db.relationship('Image', secondary=restaurant_image_table, backref='restaurant')
 
     def update(self, **kwargs):
