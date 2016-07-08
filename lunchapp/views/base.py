@@ -209,7 +209,7 @@ class WechatLogin(MethodView):
         name = request.form.get('name', None)
         if openid is None:
             return make_response('No openid', 400)
-        user = User.query.filter(openid=openid).first()
+        user = User.query.filter_by(openid=openid).first()
         if user is None:
             user = User(openid=openid, avatar=avatar, name=name)
             db_add(user, commit=True)
