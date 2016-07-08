@@ -4,7 +4,7 @@ from flask.views import MethodView
 from flask_login import login_user, logout_user, login_required
 from ..model.user import *
 from ..model.restaurant import *
-from ..model import db_add
+from ..model import db_add, db_delete
 from .. import json_data
 from flask.ext.bcrypt import Bcrypt
 
@@ -70,7 +70,7 @@ class UpdatePersonalInfor(MethodView):
     @login_required
     def post(self):
         user = g.user
-        keys = ('name', 'tel_num', 'content', 'avatar')
+        keys = ('name', 'content', 'avatar')
         args = {}
         for key in keys:
             value = request.form.get(key, None)
@@ -85,6 +85,50 @@ class UpdatePersonalInfor(MethodView):
         return jsonify(data)
 
 bp.add_url_rule("/updateme", view_func=UpdatePersonalInfor.as_view("updateme"))
+
+
+class TelephoneBind(MethodView):
+    @login_required
+    def post(self):
+        user = g.user
+        phone = request.form.get('phone', None)
+        phone_user = User.query.filter_by(tel_num=phone).first()
+        if phone_user:
+            keys = ('name', 'content', 'avatar', 'tel_num', 'password')
+            for key in keys:
+                if getattr(user, key, None) is None and getattr(phone_user, key, None) is not None:
+                    setattr(user, key, getattr(phone_user, key, None))
+            db_add(user, commit=True)
+            db_delete(phone_user, commit=True)
+            return jsonify(code=0000)
+        else:
+            user.tel_num = phone
+            db_add(user, commit=True)
+            return jsonify(code=0000)
+
+bp.add_url_rule("/phonebind", view_func=TelephoneBind.as_view("phonebind"))
+
+
+class WechatBind(MethodView):
+    @login_required
+    def post(self):
+        user = g.user
+        openid = request.form.get('openid', None)
+        wechat_user = User.query.filter_by(openid=openid).first()
+        if wechat_user:
+            keys = ('name', 'content', 'avatar', 'openid')
+            for key in keys:
+                if getattr(user, key, None) is None and getattr(wechat_user, key, None) is not None:
+                    setattr(user, key, getattr(wechat_user, key, None))
+            db_add(user, commit=True)
+            db_delete(wechat_user, commit=True)
+            return jsonify(code=0000)
+        else:
+            user.openid = openid
+            db_add(user, commit=True)
+            return jsonify(code=0000)
+
+bp.add_url_rule("/wechatbind", view_func=WechatBind.as_view("wechatbind"))
 
 
 class PersonalRestaurantList(MethodView):
