@@ -206,11 +206,12 @@ class WechatLogin(MethodView):
     def post(self):
         openid = request.form.get('openid', None)
         avatar = request.form.get('avatar', None)
+        name = request.form.get('name', None)
         if openid is None:
             return make_response('No openid', 400)
         user = User.query.filter(openid=openid).first()
         if user is None:
-            user = User(openid=openid, avatar=avatar)
+            user = User(openid=openid, avatar=avatar, name=name)
             db_add(user, commit=True)
             login_user(user)
             g.user = user
