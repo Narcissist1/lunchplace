@@ -10,8 +10,8 @@ login_manager = LoginManager()
 
 
 @login_manager.user_loader
-def load_user(phone):
-    return User.query.filter_by(tel_num=phone).first()
+def load_user(id):
+    return User.query.get(id)
 
 
 @login_manager.request_loader
