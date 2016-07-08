@@ -84,3 +84,13 @@ url: /getqiniutoken
 arguments: token
 
 return: qiniu token
+
+## 搜索餐厅
+
+method: GET
+
+url: /search
+
+arguments: token, keyword(GET 参数)
+
+return: 搜索结果列表
