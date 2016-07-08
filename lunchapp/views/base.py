@@ -165,3 +165,16 @@ class QiniuToken(MethodView):
         return jsonify(qiniu_token=get_qiniu_token())
 
 bp.add_url_rule("/getqiniutoken", view_func=QiniuToken.as_view("getqiniutoken"))
+
+
+class SearchRestaurant(MethodView):
+    @login_required
+    def get(self):
+        keyword = request.args.get('keyword', None)
+        if keyword:
+            result = Restaurant.query.filter(Restaurant.cuisine.like('%' + keyword + '%') | Restaurant.name.like('%' + keyword + '%')).all()
+            result = json_data.restaurant_dict(result)
+            return jsonify(result=result)
+        return make_response('No keyword provide', 400)
+
+bp.add_url_rule("/search", view_func=SearchRestaurant.as_view("search"))
