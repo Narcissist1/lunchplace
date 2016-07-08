@@ -38,6 +38,7 @@ bp.add_url_rule("/login", view_func=Login.as_view("login"))
 
 
 class Logout(MethodView):
+    @login_required
     def post(self):
         logout_user()
         g.user = None
