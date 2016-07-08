@@ -116,3 +116,23 @@ url: /updateme
 arguments: 个人信息字段
 
 return: 用户JSON信息
+
+## 绑定手机号
+
+method: POST
+
+url: /phonebind
+
+arguments: form data (phone)
+
+return 0000 code
+
+## 绑定微信
+
+method: POST
+
+url: /wechatbind
+
+arguments: form data(openid)
+
+return 0000 code
