@@ -20,7 +20,7 @@ class RestaurantAdmin(ModelView):
 
 
 class UserAdmin(ModelView):
-    column_exclude_list = ['password', ]
+    column_exclude_list = ['password', 'openid']
 
     def on_model_change(self, form, user, is_created=False):
         user.password = bcrypt.generate_password_hash(form.password.data)

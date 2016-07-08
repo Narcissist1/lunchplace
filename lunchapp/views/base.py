@@ -59,10 +59,32 @@ class SignUp(MethodView):
             return make_response('User already exits', 401)
         user = User(name=name, tel_num=phone, password=bcrypt.generate_password_hash(password))
         db_add(user, commit=True)
+        login_user(user)
         data = json_data.user_dict(user)
         return jsonify(data)
 
 bp.add_url_rule("/signup", view_func=SignUp.as_view("signup"))
+
+
+class UpdatePersonalInfor(MethodView):
+    @login_required
+    def post(self):
+        user = g.user
+        keys = ('name', 'tel_num', 'content', 'avatar')
+        args = {}
+        for key in keys:
+            value = request.form.get(key, None)
+            if value is not None:
+                args.update({key: value})
+        user.update(**args)
+        password = request.form.get('password', None)
+        if password:
+            user.password = bcrypt.generate_password_hash(password)
+        db_add(user, commit=True)
+        data = json_data.user_dict(user)
+        return jsonify(data)
+
+bp.add_url_rule("/updateme", view_func=UpdatePersonalInfor.as_view("updateme"))
 
 
 class PersonalRestaurantList(MethodView):
@@ -178,3 +200,26 @@ class SearchRestaurant(MethodView):
         return make_response('No keyword provide', 400)
 
 bp.add_url_rule("/search", view_func=SearchRestaurant.as_view("search"))
+
+
+class WechatLogin(MethodView):
+    def post(self):
+        openid = request.form.get('openid', None)
+        avatar = request.form.get('avatar', None)
+        if openid is None:
+            return make_response('No openid', 400)
+        user = User.query.filter(openid=openid).first()
+        if user is None:
+            user = User(openid=openid, avatar=avatar)
+            db_add(user, commit=True)
+            login_user(user)
+            g.user = user
+            data = json_data.user_dict(user)
+            return jsonify(data)
+        else:
+            login_user(user)
+            g.user = user
+            data = json_data.user_dict(user)
+            return jsonify(data)
+
+bp.add_url_rule("/wechatlogin", view_func=WechatLogin.as_view("wechatlogin"))

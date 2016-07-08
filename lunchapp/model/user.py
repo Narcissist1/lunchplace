@@ -19,10 +19,12 @@ user_restaurant_table = Table(
 class User(db.Model):
     __tablename__ = "lunch_user"
     id = db.Column(GUID, primary_key=True, default=uuid4)
-    name = db.Column(db.Unicode(30), nullable=False)        # 姓名
-    tel_num = db.Column(db.String(30), nullable=False)      # 电话
+    name = db.Column(db.Unicode(30), nullable=True)        # 姓名
+    tel_num = db.Column(db.String(30), nullable=True)      # 电话
     content = db.Column(db.Unicode(100), nullable=True)     # 简介
-    password = db.Column(db.String(255), nullable=False)    # 密码
+    password = db.Column(db.String(255), nullable=True)    # 密码
+    openid = db.Column(db.Unicode(50), nullable=True)       # Wechat open id
+    avatar = db.Column(db.Unicode(200), nullable=True)      # 头像
     restaurants = db.relationship('Restaurant', secondary=user_restaurant_table, backref='users')
 
     def is_active(self):

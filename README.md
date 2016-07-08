@@ -94,3 +94,25 @@ url: /search
 arguments: token, keyword(GET 参数)
 
 return: 搜索结果列表
+
+
+## 微信登陆
+
+method: POST
+
+url: /wechatlogin
+
+arguments: form data(openid, avatar)
+
+return: 用户JSON信息
+
+
+## 更新个人信息
+
+method: POST
+
+url: /updateme
+
+arguments: 个人信息字段
+
+return: 用户JSON信息

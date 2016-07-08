@@ -11,6 +11,7 @@ def user_dict(user):
         'name': user.name,
         'phone': user.tel_num,
         'content': user.content,
+        'avatar': user.avatar,
         'qiniu_token': get_qiniu_token()
     }
     return info
