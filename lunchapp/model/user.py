@@ -4,7 +4,7 @@ from sqlalchemy import Table
 from uuid import uuid4
 from . import GUID
 
-__all__ = ['User']
+__all__ = ['User', 'Point']
 
 user_restaurant_table = Table(
     'user_restaurant_table', db.Model.metadata,
@@ -45,3 +45,11 @@ class User(db.Model):
 
     def __unicode__(self):
         return u'<{model_name}>: {name}>'.format(name=self.name, model_name=self.__class__.__name__)
+
+
+class Point(db.Model):
+    __tablename__ = 'point'
+    id = db.Column(GUID, primary_key=True, default=uuid4)
+    name = db.Column(db.Unicode(100), nullable=True)
+    people_num = db.Column(db.Integer, nullable=False, default=0)
+    score = db.Column(db.Integer, nullable=False, default=0)

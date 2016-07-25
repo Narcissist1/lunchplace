@@ -270,3 +270,28 @@ class WechatLogin(MethodView):
             return jsonify(data)
 
 bp.add_url_rule("/wechatlogin", view_func=WechatLogin.as_view("wechatlogin"))
+
+
+class Points(MethodView):
+    def post(self):
+        score = request.form.get('score', None)
+        name = request.form.get('name', None)
+        point = Point.query.filter_by(name=name).first()
+        if point is None:
+            point = Point(name=name, score=score, people_num=1)
+            db_add(point, commit=True)
+        else:
+            point.score += int(score)
+            point.people_num += 1
+            db_add(point, commit=True)
+        return '评分成功'
+
+    def get(self):
+        name = request.args.get('name', None)
+        point = Point.query.filter_by(name=name).first()
+        if point is None:
+            return make_response('尚未评分', 404)
+        return jsonify({'name': point.name, 'score': point.score, 'people': point.people_num})
+
+
+bp.add_url_rule("/score", view_func=Points.as_view("score"))
