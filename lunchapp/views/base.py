@@ -284,7 +284,7 @@ class Points(MethodView):
             point.score += int(score)
             point.people_num += 1
             db_add(point, commit=True)
-        return '评分成功'
+        return jsonify({'status': '评分成功'})
 
     def get(self):
         name = request.args.get('name', None)
