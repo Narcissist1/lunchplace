@@ -136,3 +136,24 @@ url: /wechatbind
 arguments: form data(openid)
 
 return 0000 code
+
+
+## 读书评分
+
+1. method: POST
+
+	url: /score
+
+	arguments :form data(name:要评分的人名， score:评分)
+
+	return: string 成功信息
+
+2. method: GET
+
+	url: /score
+	
+	arguments: get型参数--name 
+	
+	return: 所要获取人的评分信息
+	
+
