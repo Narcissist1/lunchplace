@@ -26,8 +26,12 @@ class UserAdmin(ModelView):
         user.password = bcrypt.generate_password_hash(form.password.data)
 
 
+class PointAdmin(ModelView):
+    can_edit = False
+
+
 admin = Admin()
-models = [(PersonalRestaurantInfor, u'个人餐厅信息'), (Image, u'餐厅图片'), (Point, u'读书评分')]
+models = [(PersonalRestaurantInfor, u'个人餐厅信息'), (Image, u'餐厅图片')]
 
 for m in models:
     _model = ModelView(m[0], db.session, endpoint=m[0].__name__, name=m[1])
@@ -35,3 +39,4 @@ for m in models:
 
 admin.add_view(RestaurantAdmin(Restaurant, db.session, endpoint='Restaurant', name=u'餐厅'))
 admin.add_view(UserAdmin(User, db.session, endpoint='User', name=u'用户'))
+admin.add_view(PointAdmin(Point, db.session, endpoint='Point', name=u'读书评分'))
