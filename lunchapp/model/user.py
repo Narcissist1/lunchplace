@@ -53,3 +53,4 @@ class Point(db.Model):
     name = db.Column(db.Unicode(100), nullable=True)
     people_num = db.Column(db.Integer, nullable=False, default=0)
     score = db.Column(db.Integer, nullable=False, default=0)
+    avg = db.Column(db.Float, nullable=True, default=0)

@@ -278,11 +278,12 @@ class Points(MethodView):
         name = request.form.get('name', None)
         point = Point.query.filter_by(name=name).first()
         if point is None:
-            point = Point(name=name, score=score, people_num=1)
+            point = Point(name=name, score=score, people_num=1, avg=score)
             db_add(point, commit=True)
         else:
             point.score += int(score)
             point.people_num += 1
+            point.avg = round(float(point.score) / point.people_num, 2)
             db_add(point, commit=True)
         return jsonify({'status': '评分成功'})
 

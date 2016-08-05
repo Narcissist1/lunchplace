@@ -28,6 +28,7 @@ class UserAdmin(ModelView):
 
 class PointAdmin(ModelView):
     can_edit = False
+    column_default_sort = ('avg', True)
 
 
 admin = Admin()
