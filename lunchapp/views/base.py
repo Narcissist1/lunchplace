@@ -292,6 +292,8 @@ class Points(MethodView):
         point = Point.query.filter_by(name=name).first()
         if point is None:
             return make_response('尚未评分', 404)
+        point.avg = round(float(point.score) / point.people_num, 2)
+        db_add(point, commit=True)
         return jsonify({'name': point.name, 'score': point.score, 'people': point.people_num})
 
 
